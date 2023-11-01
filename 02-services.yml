@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+  
+spec:
+  type: LoadBalancer
+  externalIPs:
+    - 192.168.1.13
+  selector:
+    app: traefik
+  ports:
+    - protocol: TCP
+      port: 443
+      name: websecure
+    - protocol: TCP
+      port: 80
+      name: web
+    - protocol: TCP
+      port: 8080
+      name: admin
+    - protocol: TCP
+      port: 8082
+      name: metrics
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoami
+
+spec:
+  ports:
+    - protocol: TCP
+      name: web
+      port: 80
+  selector:
+    app: whoami
